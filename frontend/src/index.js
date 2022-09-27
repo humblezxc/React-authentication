@@ -1,6 +1,7 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Dashboard from "./components/dashboard";
 import Login from "./components/Login";
+import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 
 
@@ -16,6 +17,7 @@ function App() {
                     <Register/>
                 </Route>
                 <Route path="/dashboard">
+                    <Navbar/>
                     <Dashboard/>
                 </Route>
             </Switch>
