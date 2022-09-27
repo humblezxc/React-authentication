@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from 'react'
 import axios from "axios";
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const history = useHistory();
+    const history = useNavigate();
 
     const Register = async (e) => {
         e.preventDefault();
@@ -19,13 +19,14 @@ const Navbar = () => {
                 password: password,
                 confPassword: confPassword
             });
-            history.push('/');
+            history.push("/");
         } catch (error) {
-            if (error.res) {
-                setMsg(error.res.data.msg);
+            if (error.response) {
+                setMsg(error.response.data.msg);
             }
         }
     }
+
     return (
         <section className="hero has-background-grey-light is-fullheight is-fullwidth">
             <div className="hero-body">
@@ -70,4 +71,5 @@ const Navbar = () => {
         </section>
     )
 }
+
 export default Register
