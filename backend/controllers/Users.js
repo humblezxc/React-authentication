@@ -48,6 +48,7 @@ export const Login = async(req, res) => {
         const refreshToken = jwt.sign({userId, name, email}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
         });
+        // add last_login_at
         await Users.update({refresh_token: refreshToken},{
             where:{
                 id: userId
@@ -59,6 +60,7 @@ export const Login = async(req, res) => {
         });
         res.json({ accessToken });
     } catch (error) {
+        console.log(error)
         res.status(404).json({msg:"Email not found"});
     }
 }

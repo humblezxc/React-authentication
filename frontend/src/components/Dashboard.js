@@ -8,7 +8,7 @@ const Dashboard = () => {
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         refreshToken();
@@ -24,7 +24,7 @@ const Dashboard = () => {
             setExpire(decoded.exp);
         } catch (error) {
             if (error.response) {
-                history.push("/");
+                navigate("/");
             }
         }
     }
@@ -47,6 +47,7 @@ const Dashboard = () => {
     });
 
     const getUsers = async () => {
+        console.log("TEST")
         const response = await axiosJWT.get('http://localhost:5000/users', {
             headers: {
                 Authorization: `Bearer ${token}`

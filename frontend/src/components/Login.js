@@ -10,14 +10,18 @@ const Login = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
+        console.log("test")
+
         try {
             await axios.post('http://localhost:5000/login', {
                 email: email,
                 password: password
             });
-            navigate.push("/dashboard");
+
+            navigate("/dashboard");
         } catch (error) {
             if (error.response) {
+                console.log(error.response.data.msg);
                 setMsg(error.response.data.msg);
             }
         }
