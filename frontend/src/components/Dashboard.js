@@ -2,18 +2,46 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
+import Checkbox from "./Checkbox";
 
 const Dashboard = () => {
     const [name, setName] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
+    const [checked, setChecked] = useState([]);
+    const [isCheckAll, setIsCheckAll] = useState(false);
+    const [isCheck, setIsCheck] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         refreshToken();
         getUsers();
     }, []);
+
+    const handleSelectAll = e => {
+        setIsCheckAll(!isCheckAll);
+        console.log(isCheck)
+
+        setIsCheck(users.map(user => user.id));
+        console.log(isCheck)
+
+        if (isCheckAll) {
+            setIsCheck([]);
+        }
+    };
+
+    const handleClick = e => {
+        const { id } = e.target;
+        const checked = isCheck.find(item => item === parseInt(id));
+
+        if (checked === parseInt(id)) {
+            setIsCheck(isCheck.filter(item => item !== parseInt(id)));
+        } else {
+            setIsCheck([...isCheck, parseInt(id)]);
+        }
+    };
 
     const refreshToken = async () => {
         try {
@@ -46,6 +74,26 @@ const Dashboard = () => {
         return Promise.reject(error);
     });
 
+    const destroyUsers = async (e) => {
+        e.preventDefault();
+
+        isCheck.forEach(
+            destroyUser
+        );
+        window.location.reload();
+    }
+
+    const destroyUser = async (userId) => {
+        try {
+            await axios.delete(`http://localhost:5000/users/${userId}`);
+
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data.msg);
+            }
+        }
+    }
+
     const getUsers = async () => {
         console.log("TEST")
         const response = await axiosJWT.get('http://localhost:5000/users', {
@@ -57,27 +105,55 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <h1>Welcome Back: {name}</h1>
-            <table className="table is-striped is-fullwidth">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((user, index) => (
-                    <tr key={user.id}>
-                        <td>{index + 1}</td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
+            <form onSubmit={destroyUsers} className="box">
+                <table className="table is-striped is-fullwidth is-hoverable">
+                    <thead>
+                    <tr>
+                        <th>
+                            <Checkbox
+                                type="checkbox"
+                                name="selectAll"
+                                id="selectAll"
+                                handleClick={handleSelectAll}
+                                isChecked={isCheckAll}
+                            />
+                        </th>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Register at</th>
+                        <th>Last login at</th>
                     </tr>
-                ))}
+                    </thead>
+                    <tbody>
+                    {users.map((user, index) => (
+                        <tr key={user.id}>
+                            <td>
+                                <Checkbox
+                                    key={user.id}
+                                    type="checkbox"
+                                    id={user.id}
+                                    handleClick={handleClick}
+                                    isChecked={isCheck.includes(user.id)}
+                                />
+                            </td>
+                            <td>{index + 1}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.createdAt}</td>
+                            <td>{user.lastLogInAt}</td>
 
-                </tbody>
-            </table>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                <div className="buttons">
+                <button className="button is-danger is-normal">Delete</button>
+                <button className="button is-warning is-normal">Block</button>
+                </div>
+            </form>
         </div>
     )
 }

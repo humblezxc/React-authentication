@@ -17,7 +17,7 @@ const Register = () => {
                 name: name,
                 email: email,
                 password: password,
-                confPassword: confPassword
+                confPassword: confPassword,
             });
             navigate("/");
         } catch (error) {
@@ -25,6 +25,10 @@ const Register = () => {
                 setMsg(error.response.data.msg);
             }
         }
+    }
+
+    const routeChange = () => {
+        navigate("/");
     }
 
     return (
@@ -63,6 +67,11 @@ const Register = () => {
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth">Register</button>
                                 </div>
+                                <button className="button is-warning is-fullwidth"
+                                        onClick={routeChange}
+                                >
+                                    Log In
+                                </button>
                             </form>
                         </div>
                     </div>

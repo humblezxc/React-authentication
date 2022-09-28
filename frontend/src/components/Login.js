@@ -27,6 +27,10 @@ const Login = () => {
         }
     }
 
+    const routeChange = () => {
+        navigate("/register");
+    }
+
     return (
         <section className="hero has-background-grey-light is-fullheight is-fullwidth">
             <div className="hero-body">
@@ -50,6 +54,11 @@ const Login = () => {
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth">Login</button>
                                 </div>
+                                <button className="button is-warning is-fullwidth"
+                                        onClick={routeChange}
+                                >
+                                    Sign Up
+                                </button>
                             </form>
                         </div>
                     </div>

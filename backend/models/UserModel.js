@@ -13,6 +13,15 @@ const Users = db.define('users',{
     password:{
         type: DataTypes.STRING
     },
+    createdAt:{
+        type: DataTypes.DATE
+    },
+    lastLogInAt:{
+        type: DataTypes.DATE
+    },
+    blocked:{
+        type: DataTypes.BOOLEAN
+    },
     refresh_token:{
         type: DataTypes.TEXT
     }

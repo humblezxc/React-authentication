@@ -26,8 +26,8 @@ const Navbar = () => {
 
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <a href="/" className="navbar-item">
-                            Home
+                        <a href="/dashboard" className="navbar-item">
+                            Dashboard
                         </a>
                     </div>
 

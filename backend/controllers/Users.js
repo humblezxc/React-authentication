@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
-            attributes:['id','name','email']
+            attributes:['id','name','email', 'createdAt', 'lastLogInAt']
         });
         res.json(users);
     } catch (error) {
@@ -43,13 +43,12 @@ export const Login = async(req, res) => {
         const name = user[0].name;
         const email = user[0].email;
         const accessToken = jwt.sign({userId, name, email}, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '15s'
+            expiresIn: '1d'
         });
         const refreshToken = jwt.sign({userId, name, email}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        // add last_login_at
-        await Users.update({refresh_token: refreshToken},{
+        await Users.update({ refresh_token: refreshToken, lastLogInAt: new Date() },{
             where:{
                 id: userId
             }
@@ -82,4 +81,15 @@ export const Logout = async(req, res) => {
     });
     res.clearCookie('refreshToken');
     return res.sendStatus(200);
+}
+
+export const deleteUser = async(req, res) => {
+    const user = await Users.findOne({
+        where:{
+            id: req.params.id
+        }
+    });
+
+    user.destroy();
+    return res.sendStatus(204);
 }
