@@ -9,11 +9,11 @@ const app = express();
 
 if (process.env.NODE_ENV === 'production') {
     // Exprees will serve up production assets
-    app.use(express.static('frontend/build'));
+    app.use(express.static(__dirname + '/frontend/build'));
 
     // Express serve up index.html file if it doesn't recognize route
     app.get('*', (req, res) => {
-        res.sendFile("frontend/build/index.html");
+        res.sendFile(__dirname + '/frontend/build/index.html');
     });
 }
 
