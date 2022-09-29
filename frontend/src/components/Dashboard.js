@@ -43,11 +43,14 @@ const Dashboard = () => {
     };
 
     const refreshToken = async () => {
-        console.log("DUpa")
         try {
+            console.log(1)
             const response = await axios.get('/token');
+            console.log(response)
             setToken(response.data.accessToken);
+            console.log(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken);
+            console.log(2)
             setName(decoded.name);
             setExpire(decoded.exp);
         } catch (error) {
@@ -85,7 +88,7 @@ const Dashboard = () => {
 
     const destroyUser = async (userId) => {
         try {
-            await axios.delete(`/users/${userId}`);
+            await axiosJWT.delete(`/users/${userId}`);
         } catch (error) {
             if (error.response) {
                 console.log(error.response.data.msg);
@@ -103,7 +106,7 @@ const Dashboard = () => {
 
     const blockUser = async (userId) => {
         try {
-            await axios.post(`/users/${userId}`);
+            await axiosJWT.post(`/users/${userId}`);
         } catch (error) {
             if (error.response) {
                 console.log(error.response.data.msg);
