@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
-            attributes:['id','name','email', 'createdAt', 'lastLogInAt']
+            attributes:['id','name','email','createdAt','lastLogInAt','status']
         });
         res.json(users);
     } catch (error) {
@@ -37,6 +37,7 @@ export const Login = async(req, res) => {
                 email: req.body.email
             }
         });
+        if(user[0].status) return res.status(400).json({msg: "Access denied"});
         const match = await bcrypt.compare(req.body.password, user[0].password);
         if(!match) return res.status(400).json({msg: "Wrong Password"});
         const userId = user[0].id;
@@ -91,5 +92,25 @@ export const deleteUser = async(req, res) => {
     });
 
     user.destroy();
+    return res.sendStatus(204);
+}
+
+export const blockUser = async(req, res) => {
+    const user = await Users.findOne({
+        where:{
+            id: req.params.id
+        }
+    });
+
+    user.update({ status: !user.status })
+    if (user.status) {
+        await Users.update({refresh_token: null},{
+            where:{
+                id: user.id
+            }
+        });
+        res.clearCookie('refreshToken');
+    }
+
     return res.sendStatus(204);
 }

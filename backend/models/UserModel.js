@@ -19,7 +19,7 @@ const Users = db.define('users',{
     lastLogInAt:{
         type: DataTypes.DATE
     },
-    blocked:{
+    status:{
         type: DataTypes.BOOLEAN
     },
     refresh_token:{

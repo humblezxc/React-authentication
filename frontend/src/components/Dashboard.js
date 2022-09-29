@@ -9,7 +9,6 @@ const Dashboard = () => {
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
-    const [checked, setChecked] = useState([]);
     const [isCheckAll, setIsCheckAll] = useState(false);
     const [isCheck, setIsCheck] = useState([]);
 
@@ -32,8 +31,8 @@ const Dashboard = () => {
         }
     };
 
-    const handleClick = e => {
-        const { id } = e.target;
+    let handleClick = e => {
+        const {id} = e.target;
         const checked = isCheck.find(item => item === parseInt(id));
 
         if (checked === parseInt(id)) {
@@ -78,7 +77,7 @@ const Dashboard = () => {
         e.preventDefault();
 
         isCheck.forEach(
-            destroyUser
+             destroyUser
         );
         window.location.reload();
     }
@@ -86,16 +85,31 @@ const Dashboard = () => {
     const destroyUser = async (userId) => {
         try {
             await axios.delete(`http://localhost:5000/users/${userId}`);
-
         } catch (error) {
             if (error.response) {
                 console.log(error.response.data.msg);
             }
         }
     }
+    const blockUsers = async (e) => {
+        e.preventDefault();
 
+        isCheck.forEach(
+            blockUser
+        );
+        window.location.reload();
+    }
+
+    const blockUser = async (userId) => {
+        try {
+            await axios.post(`http://localhost:5000/users/${userId}`);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data.msg);
+            }
+        }
+    }
     const getUsers = async () => {
-        console.log("TEST")
         const response = await axiosJWT.get('http://localhost:5000/users', {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -104,11 +118,10 @@ const Dashboard = () => {
         setUsers(response.data);
     }
 
-    return (
-        <div className="container">
-            <h1>Welcome Back: {name}</h1>
-            <form onSubmit={destroyUsers} className="box">
-                <table className="table is-striped is-fullwidth is-hoverable">
+        return (
+            <div className="container">
+                <h1>Welcome Back: {name}</h1>
+                    <table className="table is-striped is-fullwidth is-hoverable">
                     <thead>
                     <tr>
                         <th>
@@ -125,6 +138,7 @@ const Dashboard = () => {
                         <th>Email</th>
                         <th>Register at</th>
                         <th>Last login at</th>
+                        <th>Blocked</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -144,18 +158,17 @@ const Dashboard = () => {
                             <td>{user.email}</td>
                             <td>{user.createdAt}</td>
                             <td>{user.lastLogInAt}</td>
-
+                            <td>{user.status.toString()}</td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
                 <div className="buttons">
-                <button className="button is-danger is-normal">Delete</button>
-                <button className="button is-warning is-normal">Block</button>
+                    <button type="button" className="button is-danger is-normal" onClick={destroyUsers}>Delete
+                    </button>
+                    <button type="button" className="button is-warning is-normal" onClick={blockUsers}>Block</button>
                 </div>
-            </form>
-        </div>
-    )
+            </div>
+        )
 }
-
 export default Dashboard
