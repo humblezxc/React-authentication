@@ -4,9 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const refreshToken = async(req, res) => {
+    console.log(process.env.ACCESS_TOKEN_SECRET)
+    console.log(process.env.REFRESH_TOKEN_SECRET)
+    console.log(req.cookies)
+
     try {
-        console.log(process.env.ACCESS_TOKEN_SECRET)
-        console.log(process.env.REFRESH_TOKEN_SECRET)
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken) return res.sendStatus(401);
         const user = await Users.findAll({
@@ -28,6 +30,8 @@ export const refreshToken = async(req, res) => {
             res.json({ accessToken });
         });
     } catch (error) {
+        console.log(process.env.ACCESS_TOKEN_SECRET)
+        console.log(process.env.REFRESH_TOKEN_SECRET)
         console.log(error);
     }
 }
