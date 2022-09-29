@@ -162,7 +162,7 @@ const Dashboard = () => {
                             <td>{user.email}</td>
                             <td>{user.createdAt}</td>
                             <td>{user.lastLogInAt}</td>
-                            <td>{user.status.toString()}</td>
+                            <td>{(user.status || false).toString()}</td>
                         </tr>
                     ))}
                     </tbody>

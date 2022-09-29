@@ -105,12 +105,7 @@ export const blockUser = async(req, res) => {
 
     user.update({ status: !user.status })
     if (user.status) {
-        await Users.update({refresh_token: null},{
-            where:{
-                id: user.id
-            }
-        });
-        res.clearCookie('refreshToken');
+        user.update({ refresh_token: null })
     }
 
     return res.sendStatus(204);
