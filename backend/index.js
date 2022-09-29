@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 
     // Express serve up index.html file if it doesn't recognize route
     app.get('*', (req, res) => {
-        res.sendFile("/frontend/build/index.html");
+        res.sendFile("frontend/build/index.html");
     });
 }
 
