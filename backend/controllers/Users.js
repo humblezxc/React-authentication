@@ -107,6 +107,5 @@ export const blockUser = async(req, res) => {
     if (user.status) {
         user.update({ refresh_token: null })
     }
-
     return res.sendStatus(204);
 }

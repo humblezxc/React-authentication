@@ -21,10 +21,8 @@ const Dashboard = () => {
 
     const handleSelectAll = e => {
         setIsCheckAll(!isCheckAll);
-        console.log(isCheck)
 
         setIsCheck(users.map(user => user.id));
-        console.log(isCheck)
 
         if (isCheckAll) {
             setIsCheck([]);
@@ -44,13 +42,9 @@ const Dashboard = () => {
 
     const refreshToken = async () => {
         try {
-            console.log(1)
             const response = await axios.get('/token');
-            console.log(response)
             setToken(response.data.accessToken);
-            console.log(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken);
-            console.log(2)
             setName(decoded.name);
             setExpire(decoded.exp);
         } catch (error) {

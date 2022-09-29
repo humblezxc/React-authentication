@@ -10,7 +10,6 @@ const Login = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
-        console.log("test")
 
         try {
             await axios.post('/login', {
