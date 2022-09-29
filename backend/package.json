@@ -4,14 +4,14 @@
   "homepage": ".",
   "version": "1.0.0",
   "description": "",
-  "main": "backend/index.js",
+  "main": "index.js",
   "type": "module",
   "engines": {
     "node": "v18.4.0"
   },
   "scripts": {
-    "start": "node backend/index.js",
-    "build": "cd frontend && npm install && npm run build",
+    "start": "node index.js",
+    "build": "cd ../frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
