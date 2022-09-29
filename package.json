@@ -10,7 +10,7 @@
     "node": "v18.4.0"
   },
   "scripts": {
-    "start": "node backend/index.js",
+    "start": "nodemon index.js",
     "build": "cd frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
