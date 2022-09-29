@@ -3,12 +3,12 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const Logout = async () => {
         try {
             await axios.delete('http://localhost:5000/logout');
-            history.push('/');
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
@@ -26,8 +26,8 @@ const Navbar = () => {
 
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <a href="/" className="navbar-item">
-                            Home
+                        <a href="/dashboard" className="navbar-item">
+                            Dashboard
                         </a>
                     </div>
 

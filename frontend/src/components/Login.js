@@ -10,17 +10,25 @@ const Login = () => {
 
     const Auth = async (e) => {
         e.preventDefault();
+        console.log("test")
+
         try {
             await axios.post('http://localhost:5000/login', {
                 email: email,
                 password: password
             });
-            navigate.push("/dashboard");
+
+            navigate("/dashboard");
         } catch (error) {
             if (error.response) {
+                console.log(error.response.data.msg);
                 setMsg(error.response.data.msg);
             }
         }
+    }
+
+    const routeChange = () => {
+        navigate("/register");
     }
 
     return (
@@ -46,6 +54,11 @@ const Login = () => {
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth">Login</button>
                                 </div>
+                                <button className="button is-warning is-fullwidth"
+                                        onClick={routeChange}
+                                >
+                                    Sign Up
+                                </button>
                             </form>
                         </div>
                     </div>

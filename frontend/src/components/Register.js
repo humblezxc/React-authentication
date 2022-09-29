@@ -8,7 +8,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const Register = async (e) => {
         e.preventDefault();
@@ -17,14 +17,18 @@ const Register = () => {
                 name: name,
                 email: email,
                 password: password,
-                confPassword: confPassword
+                confPassword: confPassword,
             });
-            history.push("/");
+            navigate("/");
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
             }
         }
+    }
+
+    const routeChange = () => {
+        navigate("/");
     }
 
     return (
@@ -63,6 +67,11 @@ const Register = () => {
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth">Register</button>
                                 </div>
+                                <button className="button is-warning is-fullwidth"
+                                        onClick={routeChange}
+                                >
+                                    Log In
+                                </button>
                             </form>
                         </div>
                     </div>
