@@ -43,6 +43,7 @@ const Dashboard = () => {
     };
 
     const refreshToken = async () => {
+        console.log("DUpa")
         try {
             const response = await axios.get('/token');
             setToken(response.data.accessToken);
