@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import dotenv from "dotenv";
-dotenv.config();
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +13,7 @@ const Login = () => {
         console.log("test")
 
         try {
-            await axios.post(`http://localhost:${process.env.PORT || 5000}/login`, {
+            await axios.post('/login', {
                 email: email,
                 password: password
             });

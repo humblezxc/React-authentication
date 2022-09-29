@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import dotenv from "dotenv";
-dotenv.config();
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -15,7 +13,7 @@ const Register = () => {
     const Register = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://localhost:${process.env.PORT || 5000}/users`, {
+            await axios.post('/users', {
                 name: name,
                 email: email,
                 password: password,

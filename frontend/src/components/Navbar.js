@@ -1,15 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import dotenv from "dotenv";
-dotenv.config();
 
 const Navbar = () => {
     const navigate = useNavigate();
 
     const Logout = async () => {
         try {
-            await axios.delete(`http://localhost:${process.env.PORT || 5000}/logout`);
+            await axios.delete('/logout');
             navigate('/');
         } catch (error) {
             console.log(error);
