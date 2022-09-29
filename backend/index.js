@@ -7,28 +7,20 @@ import router from "./routes/index.js";
 dotenv.config();
 const app = express();
 
-import path from 'path';
-import {fileURLToPath} from 'url';
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, '../frontend/build')));
 
-// 👇️ "/home/john/Desktop/javascript"
-const __dirname = path.dirname(__filename);
-console.log('directory-name 👉️', __dirname);
+// Handle GET requests to /api route
+app.get("/api", (req, res) => {
+    res.json({ message: "Hello from server!" });
+});
 
-// 👇️ "/home/borislav/Desktop/javascript/dist/index.html"
-console.log(path.join(__dirname, '/dist', 'index.html'));
-
-
-if (process.env.NODE_ENV === 'production') {
-    // Exprees will serve up production assets
-    app.use(express.static(path.join(__dirname, 'build')));
-
-
-    app.get('/*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'build', 'index.html'));
-    });
-}
+// All other GET requests not handled before will return our React app
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+});
 
 app.use(cors({ credentials:true, origin:'*' }));
 app.use(cookieParser());
