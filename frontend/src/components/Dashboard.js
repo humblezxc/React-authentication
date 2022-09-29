@@ -3,6 +3,8 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 import Checkbox from "./Checkbox";
+import dotenv from "dotenv";
+dotenv.config();
 
 const Dashboard = () => {
     const [name, setName] = useState('');
