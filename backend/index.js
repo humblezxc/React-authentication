@@ -1,13 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
+import path from "path";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import db from "./config/Database.js";
 import router from "./routes/index.js";
 dotenv.config();
 const app = express();
+import {fileURLToPath} from 'url';
 
-const path = require('path');
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../frontend/build')));
