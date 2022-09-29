@@ -5,6 +5,8 @@ dotenv.config();
 
 export const refreshToken = async(req, res) => {
     try {
+        console.log(process.env.ACCESS_TOKEN_SECRET)
+        console.log(process.env.REFRESH_TOKEN_SECRET)
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken) return res.sendStatus(401);
         const user = await Users.findAll({
