@@ -1,5 +1,7 @@
 import Users from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const refreshToken = async(req, res) => {
     try {
@@ -11,7 +13,7 @@ export const refreshToken = async(req, res) => {
             }
         });
         if(!user[0]) return res.sendStatus(403);
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.sendStatus(403);
             const userId = user[0].id;
             const name = user[0].name;
