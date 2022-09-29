@@ -1,6 +1,7 @@
 {
   "name": "project4",
   "homepage": ".",
+  "proxy": "http://localhost:$(grep PORT .env | cut -d '=' -f2)",
   "version": "1.0.0",
   "description": "",
   "main": "backend/index.js",
