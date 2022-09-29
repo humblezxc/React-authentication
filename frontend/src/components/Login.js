@@ -13,7 +13,7 @@ const Login = () => {
         console.log("test")
 
         try {
-            await axios.post('http://localhost:5000/login', {
+            await axios.post(`http://localhost:${process.env.PORT || 5000}/login`, {
                 email: email,
                 password: password
             });
